@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "obas-sus"
+version = "0.1.0"
+description = "Processamento de consultas SPARQL em bases de dados abertas do SUS com Ontop"
+authors = ["anabravn <bravinheloisa@gmail.com>"]
+readme = "README.md"
+packages = [{include = "obas_sus"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pyreaddbc = "^1.0.0"
+sqlalchemy = "^2.0.17"
+mysql = "^0.0.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

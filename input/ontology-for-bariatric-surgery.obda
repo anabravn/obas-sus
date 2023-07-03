@@ -1,0 +1,99 @@
+[PrefixDeclaration]
+:		https://github.com/glaubernunes/ontology-for-bariatric-surgery/raw/main/ontology-for-bariatric-surgery.owl#
+owl:		http://www.w3.org/2002/07/owl#
+rdf:		http://www.w3.org/1999/02/22-rdf-syntax-ns#
+xml:		http://www.w3.org/XML/1998/namespace
+xsd:		http://www.w3.org/2001/XMLSchema#
+obas:		https://github.com/glaubernunes/ontology-for-bariatric-surgery/raw/main/ontology-for-bariatric-surgery.owl#OBAS_
+obda:		https://w3id.org/obda/vocabulary#
+rdfs:		http://www.w3.org/2000/01/rdf-schema#
+
+[MappingDeclaration] @collection [[
+mappingId	Pessoa
+target		:abopr/pessoa/{AP_CNSPCN} a obas:0000169 ; obas:0000177 {AP_SEXO}^^xsd:string ; obas:0000178 {AP_NUIDADE}^^xsd:integer . 
+source		SELECT AP_CNSPCN, AP_SEXO, AP_NUIDADE FROM ABOPR;
+
+mappingId	Hipertensão Arterial
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000031 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C1 != '';
+
+mappingId	Diabetes Mellitus
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000029 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C2 != '';
+
+mappingId	Dislipidemia
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000032 . 
+source		SELECT AP_CNSPCN, AP_CID_C3 FROM ABOPR WHERE AP_CID_C3 != '';
+
+mappingId	Artrose
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000041 . 
+source		SELECT AP_CNSPCN, AP_CID_C4 FROM ABOPR WHERE AP_CID_C4 != '';
+
+mappingId	Apneia
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000030 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C5 != '';
+
+mappingId	Atividade física
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000173 obas:0000071 . 
+source		SELECT AP_CNSPCN, AP_ATV_FIS FROM ABOPR WHERE AP_ATV_FIS = 1;
+
+mappingId	Alimentação saudável
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000173 obas:1000017 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_ADESAO = 1;
+
+mappingId	Gastroplastia com Derivação Intestinal
+target		:abopr/cirurgia/{AB_NUMAIH} a obas:0000141 . 
+source		SELECT AB_NUMAIH, AB_PROCAIH FROM ABOPR WHERE AB_PROCAIH = '0407010173';
+
+mappingId	Gastrectomia Vertical em Manga
+target		:abopr/cirurgia/{AB_NUMAIH} a obas:0000142 . 
+source		SELECT AB_NUMAIH, AB_PROCAIH FROM ABOPR WHERE AB_PROCAIH = '0407010360';
+
+mappingId	Dermolipectomia Abdominal (abdominoplastia/torsoplastia)
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:0000149 . 
+source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH2 FROM ABOPR WHERE AB_PRCAIH2 = '0413040054';
+
+mappingId	Gastroplastia Vertical com Banda
+target		:abopr/cirurgia/{AB_NUMAIH} a obas:0000144 . 
+source		SELECT AB_NUMAIH, AB_PROCAIH FROM ABOPR WHERE AB_PROCAIH = '0407010181';
+
+mappingId	Pessoa teve Internação
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000001 :rdpr/internacao/{AB_NUMAIH} . :rdpr/internacao/{AB_NUMAIH} a obas:0000156 ; obas:1000015 "{ANO1}-{MES1}-{DIA1}"^^xsd:date ; obas:1000016 "{ANO2}-{MES2}-{DIA2}"^^xsd:date ; obas:1000030 {VAL_TOT}^^xsd:decimal . 
+source		SELECT AP_CNSPCN, AB_NUMAIH, VAL_TOT,
+			SUBSTR(DT_INTER, 1, 4) AS ANO1, SUBSTR(DT_INTER, 5, 2) AS MES1, SUBSTR(DT_INTER, 7, 2) AS DIA1,
+			SUBSTR(DT_SAIDA, 1, 4) AS ANO2, SUBSTR(DT_SAIDA, 5, 2) AS MES2, SUBSTR(DT_SAIDA, 7, 2) AS DIA2
+			FROM ABOPR INNER JOIN RDPR ON AB_NUMAIH = N_AIH;
+
+mappingId	Pessoa teve Consulta do Pós Operatório
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000174 :abopr/consulta/{ID} . :abopr/consulta/{ID} a obas:0000092 ; obas:1000022 {MES}^^xsd:integer ; obas:1000021 {ANO}^^xsd:integer . 
+source		SELECT AP_CNSPCN, CONCAT(AP_AUTORIZ, AP_CMP) AS ID, SUBSTR(AP_CMP,1,4) AS ANO, SUBSTR(AP_CMP,5,2) AS MES FROM ABOPR;
+
+mappingId	Pessoa realizou Cirurgia
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} obas:1000023 "{ANO}-{MES}-{DIA}"^^xsd:date . 
+source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PROCAIH, SUBSTR(AB_DTCIRUR, 1, 4) AS ANO, SUBSTR(AB_DTCIRUR, 5, 2) AS MES, SUBSTR(AB_DTCIRUR, 7, 2) AS DIA FROM ABOPR;
+
+mappingId	Houve Reganho de Peso
+target		:abopr/consulta/{ID} obas:1000037 "true"^^xsd:boolean . 
+source		SELECT CONCAT(AP_AUTORIZ, AP_CMP) AS ID FROM ABOPR WHERE AP_REG_PES = 1;
+
+mappingId	Não houve Reganho de Peso
+target		:abopr/consulta/{ID} obas:1000037 "false"^^xsd:boolean . 
+source		SELECT CONCAT(AP_AUTORIZ, AP_CMP) AS ID FROM ABOPR WHERE AP_REG_PES = 0;
+
+mappingId	Uso de Medicamento
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000200 obas:0000158 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_MEDICAM = 1;
+
+mappingId	Suplemento Nutricional
+target		:abopr/pessoa/{AP_CNSPCN} obas:0000200 obas:0000163 . 
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_POLIVIT = 1;
+
+mappingId	Dermolipectomia Crural
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:1000040 . 
+source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH3 FROM ABOPR WHERE AB_PRCAIH3 = '413040070';
+
+mappingId	Dermolipectomia Braquial
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:1000041 . 
+source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH4 FROM ABOPR WHERE AB_PRCAIH4 = '413040062';
+]]
+
