@@ -2118,12 +2118,6 @@ rdfs:label rdf:type owl:AnnotationProperty .
               rdfs:label "sutura endoscópica"@pt .
 
 
-###  https://github.com/glaubernunes/ontology-for-bariatric-surgery/raw/main/ontology-for-bariatric-surgery.owl#OBAS_1000012
-:OBAS_1000012 rdf:type owl:Class ;
-              rdfs:subClassOf <http://purl.obolibrary.org/obo/OGMS_0000105> ;
-              rdfs:label "reganho de peso"@en .
-
-
 ###  https://github.com/glaubernunes/ontology-for-bariatric-surgery/raw/main/ontology-for-bariatric-surgery.owl#OBAS_1000017
 :OBAS_1000017 rdf:type owl:Class ;
               rdfs:subClassOf :OBAS_0000067 ;

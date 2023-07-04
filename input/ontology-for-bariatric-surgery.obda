@@ -23,11 +23,11 @@ source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C2 != '';
 
 mappingId	Dislipidemia
 target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000032 . 
-source		SELECT AP_CNSPCN, AP_CID_C3 FROM ABOPR WHERE AP_CID_C3 != '';
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C3 != '';
 
 mappingId	Artrose
 target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000041 . 
-source		SELECT AP_CNSPCN, AP_CID_C4 FROM ABOPR WHERE AP_CID_C4 != '';
+source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_CID_C4 != '';
 
 mappingId	Apneia
 target		:abopr/pessoa/{AP_CNSPCN} obas:0000172 obas:0000030 . 
@@ -50,7 +50,7 @@ target		:abopr/cirurgia/{AB_NUMAIH} a obas:0000142 .
 source		SELECT AB_NUMAIH, AB_PROCAIH FROM ABOPR WHERE AB_PROCAIH = '0407010360';
 
 mappingId	Dermolipectomia Abdominal (abdominoplastia/torsoplastia)
-target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:0000149 . 
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia2/{AB_NUMAIH} . :abopr/cirurgia2/{AB_NUMAIH} a obas:0000149 . 
 source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH2 FROM ABOPR WHERE AB_PRCAIH2 = '0413040054';
 
 mappingId	Gastroplastia Vertical com Banda
@@ -89,11 +89,11 @@ target		:abopr/pessoa/{AP_CNSPCN} obas:0000200 obas:0000163 .
 source		SELECT AP_CNSPCN FROM ABOPR WHERE AP_POLIVIT = 1;
 
 mappingId	Dermolipectomia Crural
-target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:1000040 . 
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia3/{AB_NUMAIH} . :abopr/cirurgia3/{AB_NUMAIH} a obas:1000040 . 
 source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH3 FROM ABOPR WHERE AB_PRCAIH3 = '413040070';
 
 mappingId	Dermolipectomia Braquial
-target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia/{AB_NUMAIH} . :abopr/cirurgia/{AB_NUMAIH} a obas:1000041 . 
+target		:abopr/pessoa/{AP_CNSPCN} obas:1000014 :abopr/cirurgia4/{AB_NUMAIH} . :abopr/cirurgia4/{AB_NUMAIH} a obas:1000041 . 
 source		SELECT AP_CNSPCN, AB_NUMAIH, AB_PRCAIH4 FROM ABOPR WHERE AB_PRCAIH4 = '413040062';
 ]]
 
